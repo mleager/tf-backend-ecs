@@ -1,11 +1,12 @@
 # Backend Service Terraform
 
-The terraform for this service lives in the same repo as the service in a ./terraform folder.  
-It should deploy to ECS.
+Prologue:
 
+Deploy `tf-networking` before applying this terraform repo, or add your own vpc.tf
 
-This terraform config creates ECS Services using the `awsvpc` network mode.
+----------------------------------------------------------------------------------
 
+This terraform config creates ECS Services using the `awsvpc` network mode by default.
 
 Network Mode Options:
 

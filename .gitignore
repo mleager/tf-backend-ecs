@@ -1,0 +1,6 @@
+*/.terraform
+*/*.tfvars
+*/*.tfstate*
+*/oidc.tf
+*/vpc.tf
+
