@@ -2,17 +2,15 @@ resource "aws_lb" "alb" {
   name               = var.alb
   internal           = false
   load_balancer_type = "application"
-  # subnets            = aws_subnet.public.*.id
-  subnets         = local.public_subnets
-  security_groups = [aws_security_group.alb_sg.id]
+  subnets            = local.public_subnets
+  security_groups    = [aws_security_group.alb_sg.id]
 }
 
 resource "aws_lb_target_group" "alb_target_group" {
   name     = var.target_group
   port     = 80
   protocol = "HTTP"
-  # vpc_id   = aws_vpc.main.id
-  vpc_id = local.vpc_id
+  vpc_id   = local.vpc_id
 
   target_type = "ip"
 

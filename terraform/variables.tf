@@ -25,6 +25,18 @@ variable "route53_zone_name" {
   description = "Name of Route53 zone for DNS record"
 }
 
+variable "remote_state_bucket" {
+  type        = string
+  default     = "tf-state-8864"
+  description = "S3 bucket name for storing Terraform state"
+}
+
+variable "remote_state_bucket_key" {
+  type        = string
+  default     = "tf-networking"
+  description = "S3 bucket key for storing Terraform state"
+}
+
 ##############################################################################
 # NAMES
 # These names are used in the infrastructure as-is and should not be changed

@@ -21,11 +21,10 @@ resource "aws_launch_template" "launch_template" {
 }
 
 resource "aws_autoscaling_group" "asg" {
-  name             = var.asg
-  min_size         = var.min_capacity
-  max_size         = var.max_capacity
-  desired_capacity = var.desired_capacity
-  # vpc_zone_identifier = aws_subnet.private.*.id
+  name                = var.asg
+  min_size            = var.min_capacity
+  max_size            = var.max_capacity
+  desired_capacity    = var.desired_capacity
   vpc_zone_identifier = local.private_subnets
   force_delete        = true
 

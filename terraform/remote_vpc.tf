@@ -1,20 +1,11 @@
 data "terraform_remote_state" "vpc" {
-  backend = "remote"
+  backend = "s3"
 
   config = {
-    organization = "mleager"
-    workspaces = {
-      name = "aws-vpc"
-    }
+    bucket = var.remote_state_bucket
+    key    = var.remote_state_key
+    region = var.region
   }
-
-  # backend = "s3"
-  #
-  # config = {
-  #   bucket = "tf-state-8864"
-  #   key    = "tf-networking/terraform.tfstate"
-  #   region = var.region
-  # }
 }
 
 locals {
