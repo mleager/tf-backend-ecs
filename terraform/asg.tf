@@ -3,7 +3,7 @@ data "aws_ssm_parameter" "ecs_node_ami" {
 }
 
 resource "aws_launch_template" "launch_template" {
-  name_prefix   = var.name.template_prefix
+  name_prefix   = var.template_prefix
   image_id      = data.aws_ssm_parameter.ecs_node_ami.value
   instance_type = var.instance_type
 
@@ -15,16 +15,16 @@ resource "aws_launch_template" "launch_template" {
 
   user_data = base64encode(<<-EOF
     #!/bin/bash
-    echo ECS_CLUSTER=${var.name.ecs_cluster} >> /etc/ecs/ecs.config
+    echo ECS_CLUSTER=${var.ecs_cluster} >> /etc/ecs/ecs.config
   EOF
   )
 }
 
 resource "aws_autoscaling_group" "asg" {
-  name                = var.name.asg
-  min_size            = var.size.min
-  max_size            = var.size.max
-  desired_capacity    = var.size.desired
+  name                = var.asg
+  min_size            = var.min_capacity
+  max_size            = var.max_capacity
+  desired_capacity    = var.desired_capacity
   vpc_zone_identifier = aws_subnet.private.*.id
   force_delete        = true
 
