@@ -84,7 +84,8 @@ resource "aws_ecs_service" "service" {
 
   # NOTE: Only valid for "awsvpc" network mode
   network_configuration {
-    subnets         = aws_subnet.private.*.id
+    # subnets         = aws_subnet.private.*.id
+    subnets         = local.private_subnets
     security_groups = [aws_security_group.ecs_task_sg.id]
   }
 

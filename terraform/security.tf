@@ -3,7 +3,8 @@
 resource "aws_security_group" "alb_sg" {
   name        = "${var.alb}-sg"
   description = "Security Group for ALB"
-  vpc_id      = aws_vpc.main.id
+  # vpc_id      = aws_vpc.main.id
+  vpc_id = local.vpc_id
 }
 
 resource "aws_vpc_security_group_ingress_rule" "alb_http" {
@@ -33,7 +34,8 @@ resource "aws_vpc_security_group_egress_rule" "alb_egress" {
 resource "aws_security_group" "ecs_node_sg" {
   name        = "${var.ecs_cluster}-node-sg"
   description = "Security Group for ECS EC2 instances"
-  vpc_id      = aws_vpc.main.id
+  # vpc_id      = aws_vpc.main.id
+  vpc_id = local.vpc_id
 }
 
 resource "aws_vpc_security_group_ingress_rule" "ecs_from_alb" {
@@ -54,7 +56,8 @@ resource "aws_vpc_security_group_egress_rule" "ecs_egress" {
 resource "aws_security_group" "ecs_task_sg" {
   name        = "${var.ecs_cluster}-task-sg"
   description = "Security Group for ECS Tasks"
-  vpc_id      = aws_vpc.main.id
+  # vpc_id      = aws_vpc.main.id
+  vpc_id = local.vpc_id
 }
 
 resource "aws_vpc_security_group_ingress_rule" "ecs_task_from_alb" {

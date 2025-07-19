@@ -1,13 +1,13 @@
-project = "ecs-backend"
-env           = "development"
-region        = "us-east-1"
-instance_type = "t2.micro"
+project           = "ecs-backend"
+env               = "development"
+region            = "us-east-1"
+instance_type     = "t2.micro"
 route53_zone_name = "zerodawndevops.com"
 
-ecr_repo        = "health-check"
-ecs_cluster     = "ecs-cluster"
-ecs_service     = "ecs-service"
-service-family  = "service-family"
+ecr_repo       = "health-check"
+ecs_cluster    = "ecs-cluster"
+ecs_service    = "ecs-service"
+service-family = "service-family"
 
 asg             = "asg"
 alb             = "alb"
@@ -22,6 +22,6 @@ container_name   = "health-check-backend"
 container_tag    = "latest"
 container_cpu    = "512"
 container_memory = "512"
-containerPort    = "4000"
-hostPort         = "4000"
+containerPort    = 4000
+hostPort         = 4000
 

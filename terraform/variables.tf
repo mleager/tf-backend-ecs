@@ -113,26 +113,26 @@ variable "container_tag" {
 }
 
 variable "containerPort" {
-  type        = string
-  default     = "80"
+  type        = number
+  default     = 4000
   description = "ECS task container port"
 }
 
 variable "hostPort" {
-  type        = string
-  default     = "80"
+  type        = number
+  default     = 4000
   description = "ECS task container host port"
 }
 
 variable "container_cpu" {
   type        = string
-  default     = "1024"
+  default     = "512"
   description = "ECS task container CPU units"
 }
 
 variable "container_memory" {
   type        = string
-  default     = "2048"
+  default     = "1024"
   description = "ECS task container memory units"
 }
 
