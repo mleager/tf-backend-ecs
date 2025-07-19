@@ -1,5 +1,5 @@
 data "aws_ecr_repository" "ecr" {
-  name = var.name.ecr_repo
+  name = var.ecr_repo
 }
 
 output "ecr_url" {
@@ -7,7 +7,7 @@ output "ecr_url" {
 }
 
 resource "aws_ecs_cluster" "cluster" {
-  name = var.name.ecs_cluster
+  name = var.ecs_cluster
 
   # setting {
   #   name  = "containerInsights"
@@ -43,22 +43,22 @@ resource "aws_ecs_cluster_capacity_providers" "associate_provider" {
 }
 
 resource "aws_ecs_task_definition" "task_definition" {
-  family                   = var.name.family
-  network_mode             = var.task.network_mode
-  cpu                      = var.task.cpu
-  memory                   = var.task.memory
+  family                   = var.service-family
+  network_mode             = var.task_network_mode
+  cpu                      = var.task_cpu
+  memory                   = var.task_memory
   task_role_arn            = aws_iam_role.ecs_task_role.arn
   execution_role_arn       = aws_iam_role.ecs_exec_role.arn
   requires_compatibilities = ["EC2"]
 
   container_definitions = jsonencode([
     {
-      name      = var.container.name
-      image     = "${data.aws_ecr_repository.ecr.repository_url}:${var.container.image_tag}"
+      name      = var.container_name
+      image     = "${data.aws_ecr_repository.ecr.repository_url}:${var.container_tag}"
       essential = true
       portMappings = [
         {
-          containerPort = var.container.containerPort
+          containerPort = var.containerPort
           protocol      = "tcp"
           app_protocol  = "http"
         }
@@ -73,10 +73,10 @@ resource "aws_ecs_task_definition" "task_definition" {
 }
 
 resource "aws_ecs_service" "service" {
-  name            = var.name.service
+  name            = var.ecs_service
   cluster         = aws_ecs_cluster.cluster.id
   task_definition = aws_ecs_task_definition.task_definition.arn
-  desired_count   = var.size.desired
+  desired_count   = var.desired_capacity
 
   force_new_deployment          = true
   enable_ecs_managed_tags       = true
@@ -84,7 +84,7 @@ resource "aws_ecs_service" "service" {
 
   # NOTE: Only valid for "awsvpc" network mode
   network_configuration {
-    subnets         = aws_subnet.private.*.id
+    subnets         = local.private_subnets
     security_groups = [aws_security_group.ecs_task_sg.id]
   }
 
@@ -96,8 +96,8 @@ resource "aws_ecs_service" "service" {
 
   load_balancer {
     target_group_arn = aws_lb_target_group.alb_target_group.arn
-    container_name   = var.container.name
-    container_port   = var.container.containerPort
+    container_name   = var.container_name
+    container_port   = var.containerPort
   }
 
   lifecycle {
