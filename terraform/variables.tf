@@ -31,9 +31,9 @@ variable "remote_state_bucket" {
   description = "S3 bucket name for storing Terraform state"
 }
 
-variable "remote_state_bucket_key" {
+variable "remote_state_key" {
   type        = string
-  default     = "tf-networking"
+  default     = "tf-networking/terraform.tfstate"
   description = "S3 bucket key for storing Terraform state"
 }
 

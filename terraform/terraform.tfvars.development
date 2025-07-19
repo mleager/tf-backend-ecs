@@ -4,6 +4,9 @@ region            = "us-east-1"
 instance_type     = "t2.micro"
 route53_zone_name = "zerodawndevops.com"
 
+remote_state_bucket = "tf-state-8864"
+remote_state_key    = "tf-networking/terraform.tfstate"
+
 ecr_repo       = "health-check"
 ecs_cluster    = "ecs-cluster"
 ecs_service    = "ecs-service"
